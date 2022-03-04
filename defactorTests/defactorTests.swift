@@ -18,9 +18,20 @@ class defactorTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testWebServiceShareSuccess() throws {
+        let expection = expectation(description: "web service share success")
+        WebService.shared.query(value: 100) { listModel in
+            XCTAssertEqual(listModel.key, 100)
+            XCTAssertEqual(listModel.items, [
+                    DetailModel(id: 1, text: "one"),
+                    DetailModel(id: 2, text: "two"),
+                    DetailModel(id: 4, text: "four"),
+                    DetailModel(id: 5, text: "five"),
+                    DetailModel(id: 10, text: "ten")
+            ])
+            expection.fulfill()
+        }
+        wait(for: [expection], timeout: 5)
     }
 
     func testPerformanceExample() throws {

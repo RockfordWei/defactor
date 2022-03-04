@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DetailModel: Codable {
+struct DetailModel: Codable, Equatable {
     let id: UInt
     let text: String
     init(id i: UInt, text t: String) {
@@ -22,5 +22,8 @@ struct DetailModel: Codable {
         let y = NSNumber(integerLiteral: Int(x))
         let z = formatter.string(from: y) ?? "-/-"
         return DetailModel(id: x, text: z)
+    }
+    static func == (lhs: DetailModel, rhs: DetailModel) -> Bool {
+        return lhs.id == rhs.id && lhs.text == rhs.text
     }
 }
