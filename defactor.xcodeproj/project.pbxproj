@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3102F8AB27D2568300226B60 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3102F8AA27D2568300226B60 /* TableViewController.swift */; };
+		3102F8AD27D2669F00226B60 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3102F8AC27D2669F00226B60 /* WebService.swift */; };
 		31776C5927D24DDF006FA7AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31776C5827D24DDF006FA7AE /* AppDelegate.swift */; };
-		31776C5D27D24DDF006FA7AE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31776C5C27D24DDF006FA7AE /* ViewController.swift */; };
+		31776C5D27D24DDF006FA7AE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31776C5C27D24DDF006FA7AE /* MainViewController.swift */; };
 		31776C6027D24DDF006FA7AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31776C5E27D24DDF006FA7AE /* Main.storyboard */; };
 		31776C6227D24DE0006FA7AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31776C6127D24DE0006FA7AE /* Assets.xcassets */; };
 		31776C6527D24DE0006FA7AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31776C6327D24DE0006FA7AE /* LaunchScreen.storyboard */; };
@@ -34,9 +36,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3102F8AA27D2568300226B60 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		3102F8AC27D2669F00226B60 /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		31776C5527D24DDF006FA7AE /* defactor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = defactor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31776C5827D24DDF006FA7AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		31776C5C27D24DDF006FA7AE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		31776C5C27D24DDF006FA7AE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		31776C5F27D24DDF006FA7AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		31776C6127D24DE0006FA7AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		31776C6427D24DE0006FA7AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -98,11 +102,13 @@
 			isa = PBXGroup;
 			children = (
 				31776C5827D24DDF006FA7AE /* AppDelegate.swift */,
-				31776C5C27D24DDF006FA7AE /* ViewController.swift */,
+				31776C5C27D24DDF006FA7AE /* MainViewController.swift */,
+				3102F8AA27D2568300226B60 /* TableViewController.swift */,
 				31776C5E27D24DDF006FA7AE /* Main.storyboard */,
 				31776C6127D24DE0006FA7AE /* Assets.xcassets */,
 				31776C6327D24DE0006FA7AE /* LaunchScreen.storyboard */,
 				31776C6627D24DE0006FA7AE /* Info.plist */,
+				3102F8AC27D2669F00226B60 /* WebService.swift */,
 			);
 			path = defactor;
 			sourceTree = "<group>";
@@ -255,7 +261,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31776C5D27D24DDF006FA7AE /* ViewController.swift in Sources */,
+				31776C5D27D24DDF006FA7AE /* MainViewController.swift in Sources */,
+				3102F8AB27D2568300226B60 /* TableViewController.swift in Sources */,
+				3102F8AD27D2669F00226B60 /* WebService.swift in Sources */,
 				31776C5927D24DDF006FA7AE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -362,7 +370,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -417,7 +425,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -434,7 +442,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = defactor/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -453,7 +461,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = defactor/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
