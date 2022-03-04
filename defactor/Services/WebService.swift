@@ -32,26 +32,7 @@ fileprivate func factorize(n: UInt) -> [UInt] {
 
  */
 
-struct Record: Codable {
-    let id: UInt
-    let text: String
-    init(id i: UInt, text t: String) {
-        id = i; text = t
-    }
-    private static let formatter: NumberFormatter = {
-        let fmt = NumberFormatter()
-        fmt.numberStyle = .spellOut
-        return fmt
-    }()
-    static func build(x: UInt) -> Record {
-        let y = NSNumber(integerLiteral: Int(x))
-        let z = formatter.string(from: y) ?? "-/-"
-        return Record(id: x, text: z)
-    }
-}
-class WebResponse: Codable {
-    var records = [Record]()
-}
+
 class LocalURLProtocol: URLProtocol {
     enum Exception: Error {
         case invalidParameters
@@ -82,8 +63,9 @@ class LocalURLProtocol: URLProtocol {
                 self.client?.urlProtocol(self, didFailWithError: Exception.invalidParameters)
                 return
             }
-            let payload = WebResponse()
-            payload.records = factorize(n: target).map { Record.build(x: $0 )}
+            let payload = ListModel()
+            payload.key = target
+            payload.items = factorize(n: target).map { DetailModel.build(x: $0 )}
             
             guard let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "2.0", headerFields: ["MIME": "application/json"]),
                   let data = try? JSONEncoder().encode(payload) else {
@@ -110,18 +92,18 @@ class WebService {
         conf.protocolClasses = [LocalURLProtocol.self]
         session = URLSession(configuration: conf)
     }
-    func query(value: UInt, completion: @escaping ([Record]) -> ()) {
+    func query(value: UInt, completion: @escaping (ListModel) -> ()) {
         guard let url = URL(string: Constants.makeURL(value: value)) else {
             return
         }
         self.sessionResult = session.dataTaskPublisher(for: url)
             .receive(on: DispatchQueue.main)
             .tryMap { $0.data }
-            .decode(type: WebResponse.self, decoder: JSONDecoder())
+            .decode(type: ListModel.self, decoder: JSONDecoder())
             .sink(receiveCompletion: { _ in
                 print("query completed")
             }, receiveValue: { response in
-                completion(response.records)
+                completion(response)
             })
     }
     static let shared = WebService()

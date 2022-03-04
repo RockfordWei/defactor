@@ -17,7 +17,7 @@ class MainViewController: UIViewController {
 
 
     @IBAction func onClick(_ sender: Any) {
-        let tableViewController = TableViewController()
+        let tableViewController = ListViewRouter.make()
         self.navigationController?.pushViewController(tableViewController, animated: true)
     }
 }

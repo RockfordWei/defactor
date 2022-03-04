@@ -8,49 +8,40 @@
 import UIKit
 import Combine
 
-class TableViewController: UIViewController {
+class ListViewController: UIViewController {
     
-    private let searchEvent = PassthroughSubject<UInt, Error>()
-    private var searchControl: AnyCancellable? = nil
+    var presenter: ListPresenter? = nil
+    
     private let cellId = UUID().uuidString
-    private var records = [Record]()
+    private var records = [DetailModel]()
+    private let searchBar: UISearchBar = {
+        let bar = UISearchBar()
+        bar.translatesAutoresizingMaskIntoConstraints = false
+        bar.searchTextField.keyboardType = .numberPad
+        return bar
+    }()
+    private let tableView: UITableView = {
+        let table = UITableView()
+        table.translatesAutoresizingMaskIntoConstraints = false
+        return table
+    }()
     private func setupLayout() {
-        let searchBar: UISearchBar = {
-            let bar = UISearchBar()
-            bar.translatesAutoresizingMaskIntoConstraints = false
-            bar.searchTextField.keyboardType = .numberPad
-            return bar
-        }()
-        let tableView: UITableView = {
-            let table = UITableView()
-            table.translatesAutoresizingMaskIntoConstraints = false
-            return table
-        }()
-        
-        self.searchControl = searchEvent.sink(receiveCompletion: { _ in
-            print("search event marked completion")
-        }, receiveValue: { integer in
-            WebService.shared.query(value: integer) { records in
-                self.records = records
-                tableView.reloadData()
-            }
-        })
         searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.addSubview(searchBar)
         view.addSubview(tableView)
         tableView.register(TableCell.self, forCellReuseIdentifier: cellId)
         NSLayoutConstraint.activate([
-            searchBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            searchBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 56),
-            searchBar.widthAnchor.constraint(equalTo: view.widthAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             searchBar.heightAnchor.constraint(equalToConstant: 48),
             tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
-            tableView.centerXAnchor.constraint(equalTo: searchBar.centerXAnchor),
-            tableView.widthAnchor.constraint(equalTo: searchBar.widthAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
@@ -61,20 +52,30 @@ class TableViewController: UIViewController {
     }
 }
 
-extension TableViewController: UISearchBarDelegate {
+extension ListViewController: ListPresenterDelegate {
+    func onUpdate(listModel: ListModel) {
+        self.records = listModel.items
+        self.tableView.reloadData()
+    }
+}
+extension ListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if let uint = UInt(searchText) {
-            searchEvent.send(uint)
-        }
+        let uint = UInt(searchText) ?? 0
+        self.presenter?.onQuery(value: uint)
     }
 }
 
-extension TableViewController: UITableViewDelegate {
+extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 48
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let detailViewController = DetailViewRouter.make(model: records[indexPath.row])
+        self.navigationController?.pushViewController(detailViewController, animated: true)
+    }
 }
-extension TableViewController: UITableViewDataSource {
+extension ListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return records.count
