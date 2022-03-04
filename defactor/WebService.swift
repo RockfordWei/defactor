@@ -14,6 +14,24 @@ fileprivate func factorize(n: UInt) -> [UInt] {
     return (1...sqrt(n) + 1).filter { n % $0 == 0 }
 }
 
+/*
+ fileprivate func primeFactorize(n: UInt) -> [UInt] {
+     var num = n
+     var factors: Set<UInt> = []
+     for i in 2...UInt(sqrt(Double(num)) + 1) {
+         while(num % i == 0) {
+             num /= i
+             factors.insert(i)
+         }
+     }
+     if num != 1 {
+         factors.insert(num)
+     }
+     return factors.sorted()
+ }
+
+ */
+
 struct Record: Codable {
     let id: UInt
     let text: String
